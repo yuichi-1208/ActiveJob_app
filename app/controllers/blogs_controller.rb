@@ -31,7 +31,12 @@ class BlogsController < ApplicationController
         # TitlesChangeJob.perform_later(@blog.id)
         # 明日の午後にjobを実行↓
         # TitlesChangeJob.set(wait_until: Date.tomorrow.noon).perform_later(@blog.id)
-        NoticeMailer.sendmail_blog(@blog).deliver
+
+        # ActionMailer同期処理↓
+        # NoticeMailer.sendmail_blog(@blog).deliver
+        # ActionMailer非同期処理↓
+        NoticeMailer.sendmail_blog(@blog).deliver_later
+
         format.html { redirect_to blogs_path, notice: 'Blog was successfully created.' }
         format.json { render :show, status: :created, location: @blog }
       else
