@@ -30,7 +30,7 @@ class BlogsController < ApplicationController
       if @blog.save
         # TitlesChangeJob.perform_later(@blog.id)
         # 明日の午後にjobを実行↓
-        # TitlesChangeJob.set(wait_until: Date.tomorrow.noon).perform_later(@blog.id)
+        TitlesChangeJob.set(wait_until: Date.tomorrow.noon).perform_later(@blog.id)
 
         # ActionMailer同期処理↓
         # NoticeMailer.sendmail_blog(@blog).deliver
